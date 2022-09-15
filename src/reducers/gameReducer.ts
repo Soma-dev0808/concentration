@@ -7,6 +7,7 @@ enum GameActions {
     START_GAME = 'START_GAME', // Start game
     FINISH_GAME = 'FINISH_GAME', // Finish game
     UPDATE_COUNTDOWN = 'UPDATE_COUNTDOWN', // Update current count down
+    UPDATE_CARD = 'UPDATE_CARD', // Update card after clicked one of card
     RESET_PICKED_CARDS = 'RESET_PICKED_CARDS', // Reset pciked cards when got wrong match
     RESET_MESSAGE = 'RESET_MESSAGE', // Reset message
 }
@@ -33,6 +34,11 @@ const gameReducer = (state: ConcentrationCore, action: Action) => {
             return {
                 ...state,
                 count: payload.count,
+            };
+        case GameActions.UPDATE_CARD:
+            return {
+                ...state,
+                ...payload,
             };
         case GameActions.RESET_PICKED_CARDS:
             const { firstPick, secondPick } = state.stsRollBackIdx;

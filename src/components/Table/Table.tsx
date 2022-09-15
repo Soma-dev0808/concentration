@@ -2,14 +2,15 @@ import React, { FC, useEffect, useReducer, useState } from 'react';
 import Card from '../Card';
 import { gameReducer, GameActions, Action } from '../../reducers';
 import { ConcentrationCore, initCards, clickCardEvent, IndexNumbers } from '../../utilities/utils';
+import useMessageObserve from '../../customHooks/useMessageObserve';
 
-import type { Message } from '../../utilities/utils';
 import './Table.scss';
 
 // Table for concentration.
 const Table: FC = () => {
     const [time, setTime] = useState(15);
     const [state, dispatch]: [ConcentrationCore, React.Dispatch<Action>] = useReducer(gameReducer, initCards());
+    useMessageObserve(state.message, dispatch);
 
     useEffect(() => {
         dispatch({
@@ -18,42 +19,17 @@ const Table: FC = () => {
         });
     }, []);
 
-    useEffect(() => {
-        const message = state.message as Message;
-
-        if (message === '') return;
-
-        let resetCards: Action | null = null;
-        let resetMessage: Action | null = null;
-
-        if (message === 'Wrong!') {
-            resetCards = {
-                type: GameActions.RESET_PICKED_CARDS,
-                payload: {}
-            };
-        }
-
-        if (message === 'Match!' || message === 'Wrong!') {
-            resetMessage = {
-                type: GameActions.RESET_MESSAGE,
-                payload: {}
-            };
-        }
-
-        // Excuete reset functions after 800 millisec
-        setTimeout(() => {
-            resetCards && dispatch(resetCards);
-            resetMessage && dispatch(resetMessage);
-        }, 800);
-    }, [state.message]);
-
     // start
     const gameStart = () => {
         if (state.run) return;
+
+        // Initialization
         dispatch({
             type: GameActions.INIT,
             payload: initCards()
         });
+        setTime(15);
+
         const timer = setInterval(() => {
             setTime(prev => prev - 1);
         }, 1000);
@@ -98,7 +74,10 @@ const Table: FC = () => {
     }, [time]);
 
     const handleCardClick = (idx: IndexNumbers) => {
-        clickCardEvent(state, idx);
+        dispatch({
+            type: GameActions.UPDATE_CARD,
+            payload: clickCardEvent(state, idx)
+        });
     };
 
     const renderCard = (i: IndexNumbers) => {
