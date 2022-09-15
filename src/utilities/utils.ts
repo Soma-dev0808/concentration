@@ -4,7 +4,7 @@ type Cards = Array<string>;
 // 0: unpicked. 1: picked. 2: matched. 3: unmatched.
 type CardStatuses = 0 | 1 | 2 | 3;
 type CardStatusesArray = Array<CardStatuses>;
-type Overlay = "overlay" | "overlay overlay-end";
+type Overlay = "" | "overlay" | "overlay overlay-end";
 type Title = "" | "Congratulations!" | "Game over....";
 type Message = "" | "Match!" | "Wrong!";
 type RollbackObj = {
@@ -27,7 +27,7 @@ interface ConcentrationCore {
 const _cardTypes = Array("♡", "♡", "♢", "♢", "♤", "♤", "♧", "♧", "♥", "♥");
 const _numberOfCards: number = 10; // If you change here, please change types also
 type IndexNumbers = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9; // this should be set with _numberOfCards.
-type ReadyStatus = -2 | -1 | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9; // -2: no card picked. -1: 1 card pciked. 0 ~ 9: card number.
+type ReadyStatus = -2 | -1 | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9; // -2: disable card pick. -1: 1 card pciked. 0 ~ 9: card number.
 type RollbackStatus = -1 | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9; // -1: No idx set(default). 0 ~ 9 card idx.
 const _count = 15;
 
@@ -74,9 +74,10 @@ const clickCardEvent = (state: ConcentrationCore, idx: IndexNumbers) => {
     let _ready: ReadyStatus = -1;
     let _message: string = "";
     let _title: string = "";
-    let _overlay: Overlay = "overlay";
+    let _overlay: Overlay = "";
     let _run: boolean = run;
 
+    // card pick is disabled.
     if (ready === -2) {
         return;
     }
@@ -96,11 +97,6 @@ const clickCardEvent = (state: ConcentrationCore, idx: IndexNumbers) => {
             sts[ready] = 2;
             sts[idx] = 2;
 
-            // if (!isFinish(sts)) {
-            //     setTimeout(() => {
-            //         messageClear();
-            //     }, 800);
-            // }
             if (isFinish(sts)) {
                 _message = '';
                 _run = false;
@@ -111,6 +107,7 @@ const clickCardEvent = (state: ConcentrationCore, idx: IndexNumbers) => {
         } else {
             // Picked wrong card
             _message = "Wrong!";
+            // disable until card status is reset
             _ready = -2;
 
             // set _stsRollBackIdx to reset cards picked after milli seconds.
@@ -120,11 +117,6 @@ const clickCardEvent = (state: ConcentrationCore, idx: IndexNumbers) => {
             // Update cards status to change the UI of cards.
             sts[idx] = 3;
             sts[ready] = 3;
-
-            // setTimeout(() => {
-            //     messageClear();
-            //     resetCards();
-            // }, 800);
         }
     }
 

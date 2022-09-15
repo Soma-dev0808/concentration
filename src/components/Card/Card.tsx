@@ -11,7 +11,6 @@ interface CartProps {
 
 // Card component
 const Card: FC<CartProps> = ({ card, status, onClick }) => {
-
     let cardStyle = 'card card-ura';
     let numStyle = 'omote';
     switch (status) {
