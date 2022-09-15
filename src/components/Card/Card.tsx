@@ -11,20 +11,20 @@ interface CartProps {
 
 // Card component
 const Card: FC<CartProps> = ({ card, status, onClick }) => {
-    let cardStyle = 'card card-ura';
-    let numStyle = 'omote';
+    let cardStyle = 'card card-back';
+    let numStyle = 'front';
     switch (status) {
         case 1:
-            numStyle = 'ura';
+            numStyle = 'back';
             break;
         case 2:
-            numStyle = "ura atari";
+            numStyle = "back atari";
             break;
         case 3:
-            numStyle = "ura hazure";
+            numStyle = "back hazure";
             break;
         default:
-            cardStyle = 'card card-omote';
+            cardStyle = 'card card-front';
             break;
     }
     return (
