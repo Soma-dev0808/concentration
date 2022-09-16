@@ -7,7 +7,9 @@
   font-weight: 400;
 
   color: $colorWhite;
-  background: $mainBackgroundColor
+  background: -moz-linear-gradient(top left, #222, $primaryColor 30%, #47caff 60%, #222);
+  background: -webkit-linear-gradient(top left, #222, $primaryColor 30%, #47caff 60%, #222);
+  background: linear-gradient(to bottom right, #222, $primaryColor 30%, #47caff 60%, #222);
 }
 
 #root::before {

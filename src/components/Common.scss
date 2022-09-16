@@ -1,10 +1,12 @@
 // Common color palette
 $colorBlack: #222;
 $colorWhite: #fff;
-$mainBackgroundColor: linear-gradient(-45deg, #bd34fe 50%, #47caff 50%);
+$primaryColor: #bd34fe;
+$secondaryColor: #47caff;
 $resultFailColor: #060606;
 $defaultButtonColor: #78838c;
 $defaultButtonColorDark: #6c757d;
-$primaryButtonColor: #bd34fe;
+$primaryButtonColor: $primaryColor;
 $primaryButtonColorDark: #a92de2;
+$matchColor: #dfc136;
 $buttonBorderRadios: 5px;

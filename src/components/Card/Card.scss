@@ -1,3 +1,14 @@
+@import '../mixin';
+
+$cardWidthL: 120px;
+$cardWidthM: 90px;
+$cardWidthS: 70px;
+
+$cardHeightL: 175px;
+$cardHeightM: 131px;
+$cardHeightS: 102px;
+
+
 .card {
     background: #fff;
     border: none;
@@ -5,64 +16,61 @@
     font-size: 44px;
     font-weight: bold;
     line-height: 34px;
-    height: 175px;
     margin-right: 10px;
     margin-top: 23px;
     padding: 0;
     text-align: center;
-    width: 120px;
-}
+    width: $cardWidthL;
+    height: $cardHeightL;
 
-.card-front {
-    background-size: 120px;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    position: relative;
-
-    &-blue {
-        background-image: url('../../assets/card_blue.png');
+    &:focus {
+        outline: none;
     }
 
-    &-red {
-        background-image: url('../../assets/card_red.png');
+    &-front {
+        background-size: $cardWidthL;
+        background-repeat: no-repeat;
+        cursor: pointer;
+        position: relative;
+
+        &-blue {
+            background-image: url('../../assets/card_blue.png');
+        }
+
+        &-red {
+            background-image: url('../../assets/card_red.png');
+        }
+
+        &-black {
+            background-image: url('../../assets/card_dark.png');
+        }
+
+        &::before {
+            content: '';
+            background-color: rgba(0, 0, 0, .14);
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+        }
     }
 
-    &-black {
-        background-image: url('../../assets/card_dark.png');
+    &-front:hover {
+        opacity: 0.7;
+        transition: 1s;
     }
 
-    &::before {
-        content: '';
-        background-color: rgba(0, 0, 0, .14);
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
+    &-back {
+        background-image: none;
+        cursor: unset;
     }
-}
-
-.card-front:hover {
-    opacity: 0.7;
-    transition: 1s;
-}
-
-.card-back {
-    background-image: none;
-    cursor: unset;
-}
-
-.card:focus {
-    outline: none;
-}
-
-.kbd-navigation .card:focus {
-    background: #ddd;
 }
 
 .back {
-    height: 173px;
-    width: 120px;
+    // height: 173px;
+    width: $cardWidthL;
+    height: $cardHeightL;
     border-radius: 4px;
     display: table-cell;
     border: 1px solid #000;
@@ -75,8 +83,9 @@
 
 .match {
     background: rgb(255, 186, 245);
-    height: 176px;
-    width: 120px;
+    // height: 176px;
+    width: $cardWidthL;
+    height: $cardHeightL;
     border-radius: 4px;
     vertical-align: middle;
     display: table-cell;
@@ -85,4 +94,48 @@
 
 .wrong {
     background: rgb(255, 255, 255);
+}
+
+@include tablet {
+    .card {
+        font-size: 35px;
+        width: $cardWidthM;
+        height: $cardHeightM;
+
+        &-front {
+            background-size: $cardWidthM;
+        }
+    }
+
+    .back {
+        width: $cardWidthM;
+        height: $cardHeightM;
+    }
+
+    .match {
+        width: $cardWidthM;
+        height: $cardHeightM;
+    }
+}
+
+@include mobile {
+    .card {
+        font-size: 30px;
+        width: $cardWidthS;
+        height: $cardHeightS;
+
+        &-front {
+            background-size: $cardWidthS;
+        }
+    }
+
+    .back {
+        width: $cardWidthS;
+        height: $cardHeightS;
+    }
+
+    .match {
+        width: $cardWidthS;
+        height: $cardHeightS;
+    }
 }

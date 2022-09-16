@@ -15,7 +15,14 @@ const Result: FC<ResultProps> = ({
     closeButtonAction
 }) => {
 
-    const _score: number = lang.GAME_OVER === result ? 0 : score;
+    const _score: number = lang.GAME_OVER.TITLE === result ? 0 : score;
+    const isCongrats: boolean = lang.CONGRATS.TITLE === result;
+
+    const emojiSet = {
+        emoji1: isCongrats ? lang.CONGRATS.EMOJI1 : lang.GAME_OVER.EMOJI1,
+        emoji2: isCongrats ? lang.CONGRATS.EMOJI2 : lang.GAME_OVER.EMOJI2,
+    };
+
     return (
         <div className='result-container'>
             <div className='result-modal'>
@@ -26,9 +33,20 @@ const Result: FC<ResultProps> = ({
                 >
                     ✖
                 </button>
-                <p className="result result-text">
-                    {result}
-                </p>
+
+                <div className='result-text-container'>
+                    <span className='result result-text'>
+                        {emojiSet.emoji1}
+                    </span>
+                    <p className={`result result-text result-text${isCongrats && '-congrats'}`}>
+                        {result}
+                    </p>
+                    <span className='result result-text'>
+                        {emojiSet.emoji2}
+                    </span>
+                </div>
+
+
                 <p className='result result-score'>
                     Score: {_score}s
                 </p>

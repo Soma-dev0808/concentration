@@ -1,6 +1,8 @@
 import React, { FC, useEffect, useReducer, useState } from 'react';
 import Card from '../Card';
 import Status from '../Status';
+import TimeCount from '../TimeCount';
+import StartButton from '../StartButton';
 import { gameReducer, GameActions, Action } from '../../reducers';
 import { ConcentrationCore, initCards, clickCardEvent, IndexNumbers } from '../../utilities/utils';
 import useMessageObserve from '../../customHooks/useMessageObserve';
@@ -9,7 +11,7 @@ import lang from '../../utilities/lang';
 import './Table.scss';
 import Result from '../Result';
 
-const countLimit = 10000;
+const countLimit = 15;
 
 // Table for concentration.
 const Table: FC<{ color: string; }> = ({ color }) => {
@@ -49,7 +51,10 @@ const Table: FC<{ color: string; }> = ({ color }) => {
         });
     };
 
+    // When game is started this will work.
     useEffect(() => {
+        if (!state.run) return;
+
         if (time < 1) {
             // Reset setInterval
             state.timer && clearInterval(state.timer);
@@ -61,21 +66,20 @@ const Table: FC<{ color: string; }> = ({ color }) => {
                     message: '',
                     count: 0,
                     run: false,
-                    result: lang.GAME_OVER,
+                    result: lang.GAME_OVER.TITLE,
                     overlay: 'overlay overlay-end',
                 }
             });
+            return;
         }
 
-        if (state.run) {
-            // Update count(count down)
-            dispatch({
-                type: GameActions.UPDATE_COUNTDOWN,
-                payload: {
-                    count: time
-                }
-            });
-        }
+        // Update count(count down)
+        dispatch({
+            type: GameActions.UPDATE_COUNTDOWN,
+            payload: {
+                count: time
+            }
+        });
 
     }, [time]);
 
@@ -99,15 +103,17 @@ const Table: FC<{ color: string; }> = ({ color }) => {
         <>
             <div className='main'>
                 <div>
-                    <button
-                        className={`start-button start-button-${state.run && 'started'}`}
-                        onClick={gameStart}
-                    >
-                        Start
-                    </button>
+                    {/* Start button */}
+                    <StartButton
+                        isRun={state.run}
+                        gameStart={gameStart}
+                    />
 
-                    <div className="count-number">
-                        Time left : {state.count}s
+                    <div className='game-info'>
+                        {/* Show match or wrong status */}
+                        <Status message={state.message} />
+                        {/* Show time left */}
+                        <TimeCount count={state.count} />
                     </div>
 
                     <div className="table">
@@ -121,8 +127,6 @@ const Table: FC<{ color: string; }> = ({ color }) => {
                             />)
                         }
                     </div>
-
-                    <Status message={state.message} />
 
                     <div className={state.overlay}></div>
                 </div>
