@@ -8,6 +8,7 @@
 
     &-modal {
         @include modalContentBase(60%, 40%, 20px);
+        max-width: 600px;
     }
 
     &-close {
@@ -29,11 +30,24 @@
     font-weight: bold;
     color: $resultFailColor;
 
-    &-text {
+    &-text-container {
         text-align: center;
+    }
+
+    &-text {
         font-size: 2.5em;
-        font-weight: bold;
-        color: $resultFailColor;
+        line-height: 1.1em;
+        display: inline-block;
+        margin: 0 5px 10px;
+    }
+
+    &-text-congrats {
+        display: inline-block;
+        background: linear-gradient(135deg, $primaryColor 0%, $secondaryColor 100%);
+        background: -webkit-linear-gradient(-45deg, $primaryColor 0%, $secondaryColor 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
 
     &-score {
@@ -47,5 +61,41 @@
         width: 150px;
         height: 40px;
         @include buttonBase($defaultButtonColor, $defaultButtonColorDark);
+    }
+}
+
+@include tablet {
+    .result {
+        &-text {
+            text-align: center;
+            font-size: 1.8em;
+            font-weight: bold;
+            color: $resultFailColor;
+        }
+
+        &-score {
+            font-size: 1.2em;
+        }
+    }
+}
+
+@include mobile {
+    .result {
+
+        &-modal {
+            @include modalContentBase(80%, 40%, 20px);
+            max-width: 600px;
+        }
+
+        &-text {
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: $resultFailColor;
+        }
+
+        &-score {
+            font-size: 1.0em;
+        }
     }
 }

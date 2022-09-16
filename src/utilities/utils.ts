@@ -7,7 +7,9 @@ type CardStatuses = 0 | 1 | 2 | 3;
 type CardStatusesArray = Array<CardStatuses>;
 type Overlay = "" | "overlay" | "overlay overlay-start" | "overlay overlay-end";
 type Result = string;
-type Message = string;
+type MessageKeys = keyof typeof lang.STATUS_MESSAGE;
+type Message = typeof lang.STATUS_MESSAGE[MessageKeys];
+
 type RollbackObj = {
     firstPick: RollbackStatus,
     secondPick: RollbackStatus;
@@ -45,7 +47,7 @@ const initCards: InitCards = () => {
         timer: null,
         run: false,
         result: '',
-        message: '',
+        message: lang.STATUS_MESSAGE.NO_STATUS,
         overlay: 'overlay'
     };
 };
@@ -74,7 +76,7 @@ const clickCardEvent = (state: ConcentrationCore, idx: IndexNumbers) => {
     const sts = status.slice();
     let _stsRollBackIdx = stsRollBackIdx;
     let _ready: ReadyStatus = -1;
-    let _message: string = "";
+    let _message: Message = lang.STATUS_MESSAGE.NO_STATUS;
     let _result: string = "";
     let _overlay: Overlay = "";
     let _run: boolean = run;
@@ -94,21 +96,21 @@ const clickCardEvent = (state: ConcentrationCore, idx: IndexNumbers) => {
 
         // Check if 2nd pick matches with 1st pick,
         if (cards[ready] === cards[idx]) {
-            _message = lang.MATCH;
+            _message = lang.STATUS_MESSAGE.MATCH;
             // Change status to 'matched'
             sts[ready] = 2;
             sts[idx] = 2;
 
             if (isFinish(sts)) {
-                _message = '';
+                _message = lang.STATUS_MESSAGE.NO_STATUS;
                 _run = false;
-                _result = lang.CONGRATS;
+                _result = lang.CONGRATS.TITLE;
                 _overlay = 'overlay overlay-end';
                 timer && clearInterval(timer);
             }
         } else {
             // Picked wrong card
-            _message = lang.WRONG;
+            _message = lang.STATUS_MESSAGE.WRONG;
             // disable until card status is reset
             _ready = -2;
 
@@ -147,10 +149,10 @@ const countDown: CountDown = (state) => {
         // Reset setInterval
         state.timer && clearInterval(state.timer);
         return {
-            message: '',
+            message: lang.STATUS_MESSAGE.NO_STATUS,
             count: 0,
             run: false,
-            result: lang.GAME_OVER,
+            result: lang.GAME_OVER.TITLE,
             overlay: 'overlay overlay-end'
         };
     }

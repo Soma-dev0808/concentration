@@ -3,16 +3,17 @@
 
 .main {
     position: relative;
-    width: 680px;
+    width: 700px;
     margin: 0 auto;
-    padding: 20px 20px 0;
+    padding: 20px;
     border-radius: 0.3em;
     border: solid 5px #363636;
     background-color: #222222f5;
+    box-sizing: border-box;
 }
 
 .table {
-    padding-top: 38px;
+    margin-top: 15px;
     width: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -26,28 +27,10 @@
     // }
 }
 
-.start-button {
-    @include buttonBase($primaryButtonColor, $primaryButtonColorDark);
-    position: absolute;
-    z-index: 98; // should be smaller than result dialog
-    font-size: 1.2em;
-    font-weight: bold;
-    width: 180px;
-    height: 50px;
-    left: calc(50% - 90px); // 50% - (width:180px / 2)
-    top: calc(50% - 25px); // 50% - (height:50px / 2)
-    color: #fff;
-    text-shadow: 1px 1px 2px #000;
-
-    &-started {
-        display: none;
-    }
-}
-
-.count-number {
-    color: #fff;
-    font-size: 1.2em;
-    font-weight: bold;
+.game-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .overlay {
@@ -66,5 +49,11 @@
 
     &-end {
         display: block;
+    }
+}
+
+@include desktopS {
+    .main {
+        width: 95%;
     }
 }

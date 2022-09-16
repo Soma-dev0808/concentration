@@ -1,0 +1,20 @@
+@import '../Common.scss';
+@import '../mixin';
+
+.start-button {
+    @include buttonBase($primaryButtonColor, $primaryButtonColorDark);
+    position: absolute;
+    z-index: 98; // should be smaller than result dialog
+    font-size: 1.2em;
+    font-weight: bold;
+    width: 180px;
+    height: 50px;
+    left: calc(50% - 90px); // 50% - (width:180px / 2)
+    top: calc(50% - 25px); // 50% - (height:50px / 2)
+    color: #fff;
+    text-shadow: 1px 1px 2px #000;
+
+    &-started {
+        display: none;
+    }
+}
