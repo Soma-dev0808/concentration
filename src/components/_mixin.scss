@@ -1,0 +1,59 @@
+@import './Common.scss';
+
+@mixin modalBase {
+    position: fixed;
+    z-index: 99;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin modalContentBase($width, $height, $padding) {
+    background-color: white;
+    width: $width;
+    height: $height;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid $colorWhite;
+    color: $colorWhite;
+    padding: $padding
+}
+
+@mixin modalHeaderBase {
+    background-color: $primary-color;
+    border-radius: 10px 10px 0 0;
+    border-bottom: 1px solid $color-white;
+    padding: $p-m $p-l;
+    display: flex;
+    align-items: center;
+    height: 60px;
+
+    @include mobile {
+        font-size: 14px;
+    }
+}
+
+
+@mixin buttonBase($bgColor, $hoverBgColor) {
+    border-style: none;
+    cursor: pointer;
+    box-shadow: 2px 2px 3px 1px #666;
+    -moz-box-shadow: 2px 2px 3px 1px #666;
+    -webkit-box-shadow: 2px 2px 3px 1px #666;
+    border-radius: $buttonBorderRadios;
+    -moz-border-radius: $buttonBorderRadios;
+    -webkit-border-radius: $buttonBorderRadios;
+
+    background-color: $bgColor;
+
+    &:hover {
+        background-color: $hoverBgColor;
+    }
+}

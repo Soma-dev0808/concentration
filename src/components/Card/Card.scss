@@ -6,18 +6,40 @@
     font-weight: bold;
     line-height: 34px;
     height: 175px;
-    margin-right: 0px;
+    margin-right: 10px;
     margin-top: 23px;
     padding: 0;
     text-align: center;
-    width: 134px;
+    width: 120px;
 }
 
 .card-front {
-    background-image: url(https://drive.google.com/uc?export=view&id=1yTFnOjNL55k45ixbH4_YmlLkFFjtEs1k);
     background-size: 120px;
     background-repeat: no-repeat;
     cursor: pointer;
+    position: relative;
+
+    &-blue {
+        background-image: url('../../assets/card_blue.png');
+    }
+
+    &-red {
+        background-image: url('../../assets/card_red.png');
+    }
+
+    &-black {
+        background-image: url('../../assets/card_dark.png');
+    }
+
+    &::before {
+        content: '';
+        background-color: rgba(0, 0, 0, .14);
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+    }
 }
 
 .card-front:hover {
@@ -51,7 +73,7 @@
     display: none;
 }
 
-.atari {
+.match {
     background: rgb(255, 186, 245);
     height: 176px;
     width: 120px;
@@ -61,6 +83,6 @@
     border: 1px solid #000;
 }
 
-.hazure {
+.wrong {
     background: rgb(255, 255, 255);
 }

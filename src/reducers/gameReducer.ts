@@ -10,8 +10,8 @@ enum GameActions {
     UPDATE_CARD = 'UPDATE_CARD', // Update card after clicked one of card
     RESET_PICKED_CARDS = 'RESET_PICKED_CARDS', // Reset pciked cards when got wrong match
     RESET_MESSAGE = 'RESET_MESSAGE', // Reset message
+    CLOSE_RESULT = 'CLOSE_RESULT', // Close result dialog
 }
-
 
 const gameReducer = (state: ConcentrationCore, action: Action) => {
     const { type, payload } = action;
@@ -58,6 +58,12 @@ const gameReducer = (state: ConcentrationCore, action: Action) => {
             return {
                 ...state,
                 message: ''
+            };
+
+        case GameActions.CLOSE_RESULT:
+            return {
+                ...state,
+                result: ''
             };
         default:
             return state;
