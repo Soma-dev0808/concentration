@@ -7,10 +7,11 @@ interface CartProps {
     card: string,
     status: CardStatuses,
     onClick: () => void;
+    color: string;
 }
 
 // Card component
-const Card: FC<CartProps> = ({ card, status, onClick }) => {
+const Card: FC<CartProps> = ({ card, status, onClick, color }) => {
     let cardStyle = 'card card-back';
     let numStyle = 'front';
     switch (status) {
@@ -18,13 +19,13 @@ const Card: FC<CartProps> = ({ card, status, onClick }) => {
             numStyle = 'back';
             break;
         case 2:
-            numStyle = "back atari";
+            numStyle = "back match";
             break;
         case 3:
-            numStyle = "back hazure";
+            numStyle = "back wrong";
             break;
         default:
-            cardStyle = 'card card-front';
+            cardStyle = `card card-front card-front-${color}`;
             break;
     }
     return (

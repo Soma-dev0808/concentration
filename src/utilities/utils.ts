@@ -1,12 +1,13 @@
+import lang from './lang';
 
 type InitCards = () => ConcentrationCore;
 type Cards = Array<string>;
 // 0: unpicked. 1: picked. 2: matched. 3: unmatched.
 type CardStatuses = 0 | 1 | 2 | 3;
 type CardStatusesArray = Array<CardStatuses>;
-type Overlay = "" | "overlay" | "overlay overlay-end";
-type Title = "" | "Congratulations!" | "Game over....";
-type Message = "" | "Match!" | "Wrong!";
+type Overlay = "" | "overlay" | "overlay overlay-start" | "overlay overlay-end";
+type Result = string;
+type Message = string;
 type RollbackObj = {
     firstPick: RollbackStatus,
     secondPick: RollbackStatus;
@@ -19,7 +20,7 @@ interface ConcentrationCore {
     count: number,
     timer: number | null,
     run: boolean,
-    title: Title,
+    result: Result,
     message: Message,
     overlay: Overlay;
 }
@@ -43,14 +44,14 @@ const initCards: InitCards = () => {
         count: _count,
         timer: null,
         run: false,
-        title: '',
+        result: '',
         message: '',
         overlay: 'overlay'
     };
 };
 
 type Shuffle = (arr: Cards) => Cards;
-
+// Shuffle cards
 const shuffle: Shuffle = ([...arr]) => {
     for (let i = arr.length - 1; i >= 0; i--) {
         const randomNum = Math.floor(Math.random() * (i + 1));
@@ -60,6 +61,7 @@ const shuffle: Shuffle = ([...arr]) => {
     return arr;
 };
 
+// Event for clicking a card
 const clickCardEvent = (state: ConcentrationCore, idx: IndexNumbers) => {
     const { status, run, ready, cards, timer, stsRollBackIdx } = state;
 
@@ -73,7 +75,7 @@ const clickCardEvent = (state: ConcentrationCore, idx: IndexNumbers) => {
     let _stsRollBackIdx = stsRollBackIdx;
     let _ready: ReadyStatus = -1;
     let _message: string = "";
-    let _title: string = "";
+    let _result: string = "";
     let _overlay: Overlay = "";
     let _run: boolean = run;
 
@@ -92,7 +94,7 @@ const clickCardEvent = (state: ConcentrationCore, idx: IndexNumbers) => {
 
         // Check if 2nd pick matches with 1st pick,
         if (cards[ready] === cards[idx]) {
-            _message = "Match!";
+            _message = lang.MATCH;
             // Change status to 'matched'
             sts[ready] = 2;
             sts[idx] = 2;
@@ -100,13 +102,13 @@ const clickCardEvent = (state: ConcentrationCore, idx: IndexNumbers) => {
             if (isFinish(sts)) {
                 _message = '';
                 _run = false;
-                _title = "Congratulations!";
+                _result = lang.CONGRATS;
                 _overlay = 'overlay overlay-end';
                 timer && clearInterval(timer);
             }
         } else {
             // Picked wrong card
-            _message = "Wrong!";
+            _message = lang.WRONG;
             // disable until card status is reset
             _ready = -2;
 
@@ -126,7 +128,7 @@ const clickCardEvent = (state: ConcentrationCore, idx: IndexNumbers) => {
         ready: _ready,
         message: _message,
         run: _run,
-        title: _title,
+        result: _result,
         overlay: _overlay
     };
 };
@@ -148,7 +150,7 @@ const countDown: CountDown = (state) => {
             message: '',
             count: 0,
             run: false,
-            title: 'Game over....',
+            result: lang.GAME_OVER,
             overlay: 'overlay overlay-end'
         };
     }
@@ -157,5 +159,20 @@ const countDown: CountDown = (state) => {
     };
 };
 
-export { initCards, shuffle, clickCardEvent, countDown };
-export type { Cards, CardStatuses, CardStatusesArray, ConcentrationCore, Message, RollbackObj, IndexNumbers };
+export {
+    initCards,
+    shuffle,
+    clickCardEvent,
+    countDown
+};
+
+export type {
+    Cards,
+    CardStatuses,
+    CardStatusesArray,
+    ConcentrationCore,
+    Message,
+    RollbackObj,
+    IndexNumbers,
+    Overlay
+};
