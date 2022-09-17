@@ -1,14 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../app/configureStore';
 
-type Colors = 'blue' | 'red' | 'black';
+const COLORS_CONST = {
+    COLOR_BLUE: 'blue',
+    COLOR_RED: 'red',
+    COLOR_BLACK: 'black',
+} as const;
+
+type Colors = typeof COLORS_CONST[keyof typeof COLORS_CONST];
 
 interface CardColorState {
     color: Colors;
 }
 
 const initialState: CardColorState = {
-    color: 'blue'
+    color: COLORS_CONST.COLOR_BLUE
 };
 
 export const cardColorSlice = createSlice({
@@ -21,8 +27,11 @@ export const cardColorSlice = createSlice({
     }
 });
 
-export const { setColor } = cardColorSlice.actions;
+const { setColor } = cardColorSlice.actions;
+type SetColor = typeof setColor;
 
-export const selectCardColor = (state: RootState) => state.cardColor.color;
+const selectCardColor = (state: RootState) => state.cardColor.color;
 
+export { setColor, COLORS_CONST, selectCardColor };
+export type { Colors, SetColor };
 export default cardColorSlice.reducer;

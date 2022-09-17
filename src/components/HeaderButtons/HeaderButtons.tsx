@@ -1,30 +1,42 @@
 import React, { FC } from 'react';
 
 import './HeaderButtons.scss';
+import type { Colors } from '../../feature/cardColorSlice';
+import type { CommonActionType } from '../../app/configureStore';
+import type { Designs } from '../../feature/cardDesignSlice';
 
-const HeaderButtons: FC<{
-    changeCardColor: () => void,
-    changeDesign: () => void,
-}> = ({
-    changeCardColor,
+interface HeaderButtonsProps {
+    color: Colors,
+    design: Designs;
+    changeColor: CommonActionType,
+    changeDesign: CommonActionType,
+}
+
+const HeaderButtons: FC<HeaderButtonsProps> = ({
+    color,
+    design,
+    changeColor,
     changeDesign
 }) => {
-        return (
-            <div style={{ marginLeft: 'auto', marginRight: '10px' }}>
-                <button
-                    onClick={changeCardColor}
-                    style={{ width: '150px' }}
-                >
-                    Change color
-                </button>
-                <button
-                    onClick={changeDesign}
-                    style={{ width: '150px' }}
-                >
-                    Change design
-                </button>
-            </div>
-        );
-    };
+    const handleChangeColor = () => changeColor();
+    const handleChangeDesign = () => changeDesign();
+
+    return (
+        <div style={{ marginLeft: 'auto', marginRight: '10px' }}>
+            <button
+                onClick={handleChangeColor}
+                style={{ width: '150px' }}
+            >
+                Change color {color}
+            </button>
+            <button
+                onClick={handleChangeDesign}
+                style={{ width: '150px' }}
+            >
+                Change design {design}
+            </button>
+        </div>
+    );
+};
 
 export default HeaderButtons;

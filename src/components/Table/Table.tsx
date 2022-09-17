@@ -1,21 +1,25 @@
 import React, { FC, useEffect, useReducer, useState } from 'react';
+import { useAppSelector } from '../../app/hooks';
+import { selectCardColor } from '../../feature/cardColorSlice';
 import Card from '../Card';
 import Status from '../Status';
 import TimeCount from '../TimeCount';
 import StartButton from '../StartButton';
+import Result from '../Result';
 import { gameReducer, GameActions, Action } from '../../reducers';
 import { ConcentrationCore, initCards, clickCardEvent, IndexNumbers } from '../../utilities/utils';
 import useMessageObserve from '../../customHooks/useMessageObserve';
 import lang from '../../utilities/lang';
 
 import './Table.scss';
-import Result from '../Result';
 
 const countLimit = 15;
 
 // Table for concentration.
-const Table: FC<{ color: string; }> = ({ color }) => {
+const Table: FC = () => {
     const [time, setTime] = useState(countLimit);
+    const color = useAppSelector(selectCardColor);
+
     const [state, dispatch]: [ConcentrationCore, React.Dispatch<Action>] = useReducer(gameReducer, initCards());
     useMessageObserve(state.message, dispatch);
 
