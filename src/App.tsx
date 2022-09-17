@@ -1,23 +1,28 @@
 import { useState } from 'react';
-
+import { useAppSelector, useAppDispatch } from './app/hooks';
+import { setColor, selectCardColor } from './feature/cardColorSlice';
 import HeaderButtons from './components/HeaderButtons';
 import GameTitle from './components/GameTitle';
 import Table from './components/Table';
 
 function App() {
 
-  const [color, setColor] = useState('blue');
+  const dispatch = useAppDispatch();
+  const color = useAppSelector(selectCardColor);
+
+
+  // const [color, setColor] = useState('blue');
   const [design, setDesgin] = useState('default');
 
   const handleChangeColor = () => {
     if (color === 'blue') {
-      setColor('red');
+      dispatch(setColor('red'));
     }
     else if (color === 'red') {
-      setColor('black');
+      dispatch(setColor('black'));
     }
     else {
-      setColor('blue');
+      dispatch(setColor('blue'));
     }
   };
 
@@ -25,7 +30,7 @@ function App() {
     if (design === 'default') {
       setDesgin('animal');
     }
-    else if (color === 'animal') {
+    else if (design === 'animal') {
       setDesgin('face');
     }
     else {
