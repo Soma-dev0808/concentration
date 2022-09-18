@@ -12,6 +12,7 @@ import useMessageObserve from '../../customHooks/useMessageObserve';
 import lang from '../../utilities/lang';
 
 import './Table.scss';
+import { selectCardDesign } from '../../feature/cardDesignSlice';
 
 const countLimit = 15;
 
@@ -19,15 +20,16 @@ const countLimit = 15;
 const Table: FC = () => {
     const [time, setTime] = useState(countLimit);
     const color = useAppSelector(selectCardColor);
+    const design = useAppSelector(selectCardDesign);
 
-    const [state, dispatch]: [ConcentrationCore, React.Dispatch<Action>] = useReducer(gameReducer, initCards());
+    const [state, dispatch]: [ConcentrationCore, React.Dispatch<Action>] = useReducer(gameReducer, initCards({ design }));
     useMessageObserve(state.message, dispatch);
 
     // Initialization
     useEffect(() => {
         dispatch({
             type: GameActions.INIT,
-            payload: initCards()
+            payload: initCards({ design })
         });
     }, []);
 
@@ -38,7 +40,7 @@ const Table: FC = () => {
         // Initialization
         dispatch({
             type: GameActions.INIT,
-            payload: initCards()
+            payload: initCards({ design })
         });
         setTime(countLimit);
 

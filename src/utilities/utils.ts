@@ -1,6 +1,11 @@
 import lang from './lang';
+import { DESIGN_CONST } from '../feature/cardDesignSlice';
+import { COLORS_CONST } from '../feature/cardColorSlice';
 
-type InitCards = () => ConcentrationCore;
+import type { Designs } from '../feature/cardDesignSlice';
+import type { Colors } from '../feature/cardColorSlice';
+
+type InitCards = (setting: GameSetting) => ConcentrationCore;
 type Cards = Array<string>;
 // 0: unpicked. 1: picked. 2: matched. 3: unmatched.
 type CardStatuses = 0 | 1 | 2 | 3;
@@ -9,6 +14,11 @@ type Overlay = "" | "overlay" | "overlay overlay-start" | "overlay overlay-end";
 type Result = string;
 type MessageKeys = keyof typeof lang.STATUS_MESSAGE;
 type Message = typeof lang.STATUS_MESSAGE[MessageKeys];
+const GAME_MODE = {
+    EASY: 'easy',
+    HARD: 'hard',
+} as const;
+type GameModeType = typeof GAME_MODE[keyof typeof GAME_MODE];
 
 type RollbackObj = {
     firstPick: RollbackStatus,
@@ -28,14 +38,33 @@ interface ConcentrationCore {
 }
 
 const _cardTypes = Array("♡", "♡", "♢", "♢", "♤", "♤", "♧", "♧", "♥", "♥");
+const emojiFace = Array("😀", "😀", "😇", "😇", "😎", "😎", "😱", "😱", "🤧", "🤧");
+const emojiAnimal = Array("🐻", "🐻", "🐨", "🐨", "🐥", "🐥", "🐒", "🐒", "🐯", "🐯");
+
 const _numberOfCards: number = 10; // If you change here, please change types also
 type IndexNumbers = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9; // this should be set with _numberOfCards.
 type ReadyStatus = -2 | -1 | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9; // -2: disable card pick. -1: 1 card pciked. 0 ~ 9: card number.
 type RollbackStatus = -1 | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9; // -1: No idx set(default). 0 ~ 9 card idx.
 const _count = 15;
 
-const initCards: InitCards = () => {
-    const cardTypes: Array<string> = _cardTypes;
+interface GameSetting {
+    mode?: GameModeType;
+    design: Designs;
+}
+
+const DESIGNS = {
+    [DESIGN_CONST.DESIGN_DEFAULT]: Array("♡", "♡", "♢", "♢", "♤", "♤", "♧", "♧", "♥", "♥"),
+    [DESIGN_CONST.DESIGN_FACE]: Array("😀", "😀", "😇", "😇", "😎", "😎", "😱", "😱", "🤧", "🤧"),
+    [DESIGN_CONST.DESIGN_ANIMAL]: Array("🐻", "🐻", "🐨", "🐨", "🐥", "🐥", "🐒", "🐒", "🐯", "🐯")
+};
+
+// Get card design;
+const getCardDesign = (design: Designs) => DESIGNS[design];
+
+// Game initialization
+const initCards: InitCards = ({ design }) => {
+    const cardTypes: Array<string> = getCardDesign(design);
+    console.log(cardTypes);
     const cardShuffled = shuffle(cardTypes);
     let status = Array(_numberOfCards).fill(0);
     return {
@@ -161,11 +190,48 @@ const countDown: CountDown = (state) => {
     };
 };
 
+const getButtonColor = (color: Colors) => {
+    let colorStyle = '';
+    switch (color) {
+        case COLORS_CONST.COLOR_BLUE:
+            colorStyle = 'blue';
+            break;
+        case COLORS_CONST.COLOR_RED:
+            colorStyle = 'red';
+            break;
+        default:
+            COLORS_CONST.COLOR_BLACK;
+            colorStyle = 'black';
+    }
+
+    return colorStyle;
+};
+
+
+const getButtonEmoji = (design: string) => {
+    let emoji = '';
+    switch (design) {
+        case DESIGN_CONST.DESIGN_FACE:
+            emoji = '😀';
+            break;
+        case DESIGN_CONST.DESIGN_ANIMAL:
+            emoji = '🐻';
+            break;
+        default:
+            DESIGN_CONST.DESIGN_DEFAULT;
+            emoji = '♤';
+    }
+
+    return emoji;
+};
+
 export {
     initCards,
     shuffle,
     clickCardEvent,
-    countDown
+    countDown,
+    getButtonEmoji,
+    getButtonColor
 };
 
 export type {
