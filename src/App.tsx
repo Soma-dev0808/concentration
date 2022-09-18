@@ -5,10 +5,11 @@ import Table from './components/Table';
 function App() {
   return (
     <div className="game-container">
-
       <HeaderButtons />
-      <GameTitle />
-      <Table />
+      <div className="game-table-contaner">
+        <GameTitle />
+        <Table />
+      </div>
     </div>
   );
 }

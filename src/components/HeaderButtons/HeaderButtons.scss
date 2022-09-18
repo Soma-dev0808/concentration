@@ -1,0 +1,46 @@
+@import '../Common.scss';
+@import '../mixin';
+
+.header-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.header-button {
+    @include buttonBase($defaultButtonColor, $defaultButtonColorDark);
+    width: 130px;
+    margin-right: 10px;
+    padding: 10px;
+    font-weight: bold;
+    color: $colorWhite;
+    height: 37px;
+    box-shadow: 1x 1px 2px 1px rgba(34, 34, 34, 0.405);
+    -moz-box-shadow: 1px 1px 2px 1px rgba(34, 34, 34, 0.405);
+    -webkit-box-shadow: 1px 1px 2px 1px rgba(34, 34, 34, 0.405);
+
+    &-blue {
+        background-color: $colorBlue;
+
+        &:hover {
+            background-color: $colorBlueDark;
+        }
+    }
+
+    &-red {
+        background-color: $colorRed;
+
+        &:hover {
+            background-color: $colorRedDark;
+        }
+    }
+
+    &-black {
+        background-color: $colorBlack;
+
+        &:hover {
+            background-color: $colorBlackHover;
+        }
+    }
+}

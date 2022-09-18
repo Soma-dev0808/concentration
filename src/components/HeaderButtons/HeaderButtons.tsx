@@ -4,6 +4,7 @@ import './HeaderButtons.scss';
 import type { Colors } from '../../feature/cardColorSlice';
 import type { CommonActionType } from '../../app/configureStore';
 import type { Designs } from '../../feature/cardDesignSlice';
+import { getButtonColor, getButtonEmoji } from '../../utilities/utils';
 
 interface HeaderButtonsProps {
     color: Colors,
@@ -22,18 +23,18 @@ const HeaderButtons: FC<HeaderButtonsProps> = ({
     const handleChangeDesign = () => changeDesign();
 
     return (
-        <div style={{ marginLeft: 'auto', marginRight: '10px' }}>
+        <div className='header-buttons'>
             <button
                 onClick={handleChangeColor}
-                style={{ width: '150px' }}
+                className={`header-button header-button-${getButtonColor(color)}`}
             >
-                Change color {color}
+                Card Color {color}
             </button>
             <button
                 onClick={handleChangeDesign}
-                style={{ width: '150px' }}
+                className='header-button'
             >
-                Change design {design}
+                Card Design {getButtonEmoji(design)}
             </button>
         </div>
     );
