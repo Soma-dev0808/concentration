@@ -8,7 +8,8 @@ import { getButtonColor, getButtonEmoji } from '../../utilities/utils';
 
 interface HeaderButtonsProps {
     color: Colors,
-    design: Designs;
+    design: Designs,
+    run: boolean,
     changeColor: CommonActionType,
     changeDesign: CommonActionType,
 }
@@ -16,6 +17,7 @@ interface HeaderButtonsProps {
 const HeaderButtons: FC<HeaderButtonsProps> = ({
     color,
     design,
+    run,
     changeColor,
     changeDesign
 }) => {
@@ -26,13 +28,19 @@ const HeaderButtons: FC<HeaderButtonsProps> = ({
         <div className='header-buttons'>
             <button
                 onClick={handleChangeColor}
-                className={`header-button header-button-${getButtonColor(color)}`}
+                className={
+                    `header-button 
+                    header-button-${getButtonColor(color)} 
+                    ${run && 'header-button-disabled'}`
+                }
+                disabled={run}
             >
                 Card Color {color}
             </button>
             <button
                 onClick={handleChangeDesign}
-                className='header-button'
+                className={`header-button ${run && 'header-button-disabled'}`}
+                disabled={run}
             >
                 Card Design {getButtonEmoji(design)}
             </button>

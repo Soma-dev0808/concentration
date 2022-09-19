@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import type { CardStatuses } from '../../utilities/utils';
+import type { CardStatuses } from '../../feature/gameSlice';
 
 import './Card.scss';
 
