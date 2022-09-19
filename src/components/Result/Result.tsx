@@ -51,9 +51,14 @@ const Result: FC<ResultProps> = ({
                     Score: {_score}s
                 </p>
 
-                <button className='result-post-button'>
+                {/* Disable this until firebase integration is done */}
+                {/* <button
+                    className='result-post-button'
+                    type='button'
+                    disabled
+                >
                     Post score
-                </button>
+                </button> */}
             </div>
         </div>
     );

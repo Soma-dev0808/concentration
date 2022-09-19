@@ -1,34 +1,31 @@
 import { useEffect } from "react";
-import { Action, GameActions } from "../reducers";
-import { Message } from "../utilities/utils";
+import { Message } from "../feature/gameSlice";
 
-const useMessageObserve = (message: Message, dispatch: (value: Action) => void) => {
+const useMessageObserve = (
+    message: Message,
+    callBack1: () => void,
+    callBack2: () => void
+) => {
     useEffect(() => {
         const _message = message as Message;
 
         if (_message === '') return;
 
-        let resetCards: Action | null = null;
-        let resetMessage: Action | null = null;
+        let resetCards: boolean = false;
+        let resetMessage: boolean = false;
 
         if (_message === 'Wrong!') {
-            resetCards = {
-                type: GameActions.RESET_PICKED_CARDS,
-                payload: {}
-            };
+            resetCards = true;
         }
 
         if (_message === 'Match!' || _message === 'Wrong!') {
-            resetMessage = {
-                type: GameActions.RESET_MESSAGE,
-                payload: {}
-            };
+            resetMessage = true;
         }
 
         // Excuete reset functions after 800 millisec
         setTimeout(() => {
-            resetCards && dispatch(resetCards);
-            resetMessage && dispatch(resetMessage);
+            resetCards && callBack1();
+            resetMessage && callBack2();
         }, 800);
     }, [message]);
 };

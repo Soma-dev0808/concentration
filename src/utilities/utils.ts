@@ -4,53 +4,23 @@ import { COLORS_CONST } from '../feature/cardColorSlice';
 
 import type { Designs } from '../feature/cardDesignSlice';
 import type { Colors } from '../feature/cardColorSlice';
+import type {
+    GameSetting,
+    ConcentrationCore,
+    Cards,
+    CardStatusesArray,
+    Overlay,
+    Message,
+    CardStatuses,
+    ReadyStatus,
+    RollbackStatus,
+} from '../feature/gameSlice';
 
 type InitCards = (setting: GameSetting) => ConcentrationCore;
-type Cards = Array<string>;
-// 0: unpicked. 1: picked. 2: matched. 3: unmatched.
-type CardStatuses = 0 | 1 | 2 | 3;
-type CardStatusesArray = Array<CardStatuses>;
-type Overlay = "" | "overlay" | "overlay overlay-start" | "overlay overlay-end";
-type Result = string;
-type MessageKeys = keyof typeof lang.STATUS_MESSAGE;
-type Message = typeof lang.STATUS_MESSAGE[MessageKeys];
-const GAME_MODE = {
-    EASY: 'easy',
-    HARD: 'hard',
-} as const;
-type GameModeType = typeof GAME_MODE[keyof typeof GAME_MODE];
 
-type RollbackObj = {
-    firstPick: RollbackStatus,
-    secondPick: RollbackStatus;
-};
-interface ConcentrationCore {
-    cards: Cards,
-    status: CardStatusesArray,
-    stsRollBackIdx: RollbackObj, // temp status for rollback status
-    ready: ReadyStatus,
-    count: number,
-    timer: number | null,
-    run: boolean,
-    result: Result,
-    message: Message,
-    overlay: Overlay;
-}
-
-const _cardTypes = Array("♡", "♡", "♢", "♢", "♤", "♤", "♧", "♧", "♥", "♥");
-const emojiFace = Array("😀", "😀", "😇", "😇", "😎", "😎", "😱", "😱", "🤧", "🤧");
-const emojiAnimal = Array("🐻", "🐻", "🐨", "🐨", "🐥", "🐥", "🐒", "🐒", "🐯", "🐯");
-
-const _numberOfCards: number = 10; // If you change here, please change types also
 type IndexNumbers = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9; // this should be set with _numberOfCards.
-type ReadyStatus = -2 | -1 | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9; // -2: disable card pick. -1: 1 card pciked. 0 ~ 9: card number.
-type RollbackStatus = -1 | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9; // -1: No idx set(default). 0 ~ 9 card idx.
+const _numberOfCards = 10; // If you change here, please change types also
 const _count = 15;
-
-interface GameSetting {
-    mode?: GameModeType;
-    design: Designs;
-}
 
 const DESIGNS = {
     [DESIGN_CONST.DESIGN_DEFAULT]: Array("♡", "♡", "♢", "♢", "♤", "♤", "♧", "♧", "♥", "♥"),
@@ -64,7 +34,6 @@ const getCardDesign = (design: Designs) => DESIGNS[design];
 // Game initialization
 const initCards: InitCards = ({ design }) => {
     const cardTypes: Array<string> = getCardDesign(design);
-    console.log(cardTypes);
     const cardShuffled = shuffle(cardTypes);
     let status = Array(_numberOfCards).fill(0);
     return {
@@ -103,7 +72,7 @@ const clickCardEvent = (state: ConcentrationCore, idx: IndexNumbers) => {
     if (!run) return;
 
     const sts = status.slice();
-    let _stsRollBackIdx = stsRollBackIdx;
+    let _stsRollBackIdx = { ...stsRollBackIdx };
     let _ready: ReadyStatus = -1;
     let _message: Message = lang.STATUS_MESSAGE.NO_STATUS;
     let _result: string = "";
@@ -234,13 +203,4 @@ export {
     getButtonColor
 };
 
-export type {
-    Cards,
-    CardStatuses,
-    CardStatusesArray,
-    ConcentrationCore,
-    Message,
-    RollbackObj,
-    IndexNumbers,
-    Overlay
-};
+export type { IndexNumbers };

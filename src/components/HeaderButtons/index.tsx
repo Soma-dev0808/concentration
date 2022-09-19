@@ -13,15 +13,18 @@ const HeaderButtonsContainer = ({
     color,
     design,
     headerButtonsActions,
+    run,
 }: {
     color: Colors;
     design: Designs,
     headerButtonsActions: typeof HeaderButtonsActions;
+    run: boolean,
 }) => {
     return (
         <HeaderButtons
             color={color}
             design={design}
+            run={run}
             changeColor={headerButtonsActions.changeColor}
             changeDesign={headerButtonsActions.changeDesign}
         />
@@ -33,6 +36,7 @@ const mapStateToProps = (state: RootState) => {
     return ({
         color: state.cardColor.color,
         design: state.cardDesign.design,
+        run: state.gameState.gameState.run,
     });
 };
 

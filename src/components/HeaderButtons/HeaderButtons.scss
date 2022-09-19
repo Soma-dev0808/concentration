@@ -43,4 +43,13 @@
             background-color: $colorBlackHover;
         }
     }
+
+    &-disabled {
+        background-color: $defaultButtonColorDark;
+
+        &:hover {
+            cursor: default;
+            background-color: $defaultButtonColorDark;
+        }
+    }
 }
