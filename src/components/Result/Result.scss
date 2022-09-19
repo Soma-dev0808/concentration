@@ -7,7 +7,7 @@
     }
 
     &-modal {
-        @include modalContentBase(60%, 40%, 20px);
+        @include modalContentBase(60%, 20%, 20px); // Height 20% for now until firebase is integrated.
         max-width: 600px;
     }
 
