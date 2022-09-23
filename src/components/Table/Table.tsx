@@ -5,20 +5,17 @@ import TimeCount from '../TimeCount';
 import StartButton from '../StartButton';
 import Result from '../Result';
 import useMessageObserve from '../../customHooks/useMessageObserve';
+import { GAME_COUNT } from '../../utilities/gameSetting';
 
 import './Table.scss';
 
-import type { IndexNumbers } from '../../utilities/utils';
+import { getDifficulty, IndexNumbers } from '../../utilities/utils';
 import type { ConcentrationCore } from '../../feature/gameSlice';
 import type { Colors } from '../../feature/cardColorSlice';
-import type { Designs } from '../../feature/cardDesignSlice';
 import type { GenericCommonActionType, CommonActionType } from '../../app/configureStore';
-
-const countLimit = 15;
 
 interface TableProps extends ConcentrationCore {
     color: Colors,
-    design: Designs;
     initializeGame: GenericCommonActionType,
     startNewGame: GenericCommonActionType,
     finishCurrGame: CommonActionType,
@@ -32,7 +29,6 @@ interface TableProps extends ConcentrationCore {
 // Table for concentration.
 const Table: FC<TableProps> = ({
     color,
-    design,
     cards,
     status,
     count,
@@ -50,23 +46,28 @@ const Table: FC<TableProps> = ({
     resetPickedCards,
     resetMessage
 }) => {
-    const [time, setTime] = useState(countLimit);
+    // Get game count based on game difficulty.
+    const difficulty = getDifficulty(color);
+    const gameCount = GAME_COUNT[difficulty];
+    const [time, setTime] = useState(gameCount);
+
+    const isHardMode = difficulty === 'hard';
 
     useMessageObserve(message, resetPickedCards, resetMessage);
 
     // Initialization
     useEffect(() => {
-        initializeGame(design);
-    }, []);
+        initializeGame();
+    }, [color]);
 
     // start
     const gameStart = () => {
         if (run) return;
 
         // Initialization
-        initializeGame(design);
+        initializeGame();
 
-        setTime(countLimit);
+        setTime(gameCount);
 
         const timer = setInterval(() => {
             setTime(prev => prev - 1);
@@ -95,7 +96,7 @@ const Table: FC<TableProps> = ({
 
     return (
         <>
-            <div className='main'>
+            <div className={`main ${isHardMode && 'main-hard'}`}>
                 <div>
                     {/* Start button */}
                     <StartButton
@@ -111,10 +112,10 @@ const Table: FC<TableProps> = ({
                     </div>
 
                     <div className="table">
-                        {[...Array(10).keys()].map((_, idx) =>
+                        {cards.map((card, idx) =>
                             <Card
                                 key={idx}
-                                card={cards[idx]}
+                                card={card}
                                 status={status[idx]}
                                 onClick={() => cardClickEvent(idx as IndexNumbers)} //  // Update a card status after clicking it.
                                 color={color}
@@ -130,7 +131,7 @@ const Table: FC<TableProps> = ({
                 result !== '' && (
                     <Result
                         result={result}
-                        score={countLimit - count}
+                        score={gameCount - count}
                         closeButtonAction={closeResultDialog}
                     />
                 )

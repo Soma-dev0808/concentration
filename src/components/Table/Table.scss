@@ -10,6 +10,10 @@
     border: solid 5px #363636;
     background-color: #222222f5;
     box-sizing: border-box;
+
+    &-hard {
+        width: 90%;
+    }
 }
 
 .table {

@@ -4,23 +4,21 @@ import { COLORS_CONST } from '../feature/cardColorSlice';
 
 import type { Designs } from '../feature/cardDesignSlice';
 import type { Colors } from '../feature/cardColorSlice';
-import type {
+import {
     GameSetting,
     ConcentrationCore,
     Cards,
     CardStatusesArray,
     Overlay,
     Message,
-    CardStatuses,
     ReadyStatus,
-    RollbackStatus,
 } from '../feature/gameSlice';
+import { CARD_COUNT, GAME_COUNT, GAME_MODE } from './gameSetting';
+import type { GameModeType } from './gameSetting';
 
 type InitCards = (setting: GameSetting) => ConcentrationCore;
 
-type IndexNumbers = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9; // this should be set with _numberOfCards.
-const _numberOfCards = 10; // If you change here, please change types also
-const _count = 15;
+type IndexNumbers = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13;
 
 const DESIGNS = {
     [DESIGN_CONST.DESIGN_DEFAULT]: Array("♡", "♡", "♢", "♢", "♤", "♤", "♧", "♧", "♥", "♥"),
@@ -28,20 +26,36 @@ const DESIGNS = {
     [DESIGN_CONST.DESIGN_ANIMAL]: Array("🐻", "🐻", "🐨", "🐨", "🐥", "🐥", "🐒", "🐒", "🐯", "🐯")
 };
 
+const HARD_MODE_DESIGNS = {
+    [DESIGN_CONST.DESIGN_DEFAULT]: Array("♣️", "♣️", "♠️", "♠️"),
+    [DESIGN_CONST.DESIGN_FACE]: Array("😄", "😄", "😌", "😌"),
+    [DESIGN_CONST.DESIGN_ANIMAL]: Array("🦁", "🦁", "🐣", "🐣")
+};
+
 // Get card design;
-const getCardDesign = (design: Designs) => DESIGNS[design];
+const getCardDesign = (design: Designs, isHardMode: boolean) =>
+    isHardMode
+        ? [...DESIGNS[design], ...HARD_MODE_DESIGNS[design]]
+        : DESIGNS[design];
+
+const getCardNumber = (difficulty: GameModeType) => CARD_COUNT[difficulty]; // If you change here, please change types also
 
 // Game initialization
-const initCards: InitCards = ({ design }) => {
-    const cardTypes: Array<string> = getCardDesign(design);
+const initCards: InitCards = ({ design, difficulty }) => {
+    const isHardMode = difficulty === 'hard';
+    const cardTypes: Array<string> = getCardDesign(design, isHardMode);
     const cardShuffled = shuffle(cardTypes);
-    let status = Array(_numberOfCards).fill(0);
+    let status = Array(getCardNumber(difficulty)).fill(0);
+
+    // Change count depends on difficulty.
+    const count = GAME_COUNT[difficulty];
+
     return {
         cards: cardShuffled,
         status,
         stsRollBackIdx: { 'firstPick': -1, 'secondPick': -1 },
         ready: -1,
-        count: _count,
+        count,
         timer: null,
         run: false,
         result: '',
@@ -159,7 +173,8 @@ const countDown: CountDown = (state) => {
     };
 };
 
-const getButtonColor = (color: Colors) => {
+// Get button color
+const getButtonColor = (color: Colors): string => {
     let colorStyle = '';
     switch (color) {
         case COLORS_CONST.COLOR_BLUE:
@@ -176,8 +191,8 @@ const getButtonColor = (color: Colors) => {
     return colorStyle;
 };
 
-
-const getButtonEmoji = (design: string) => {
+// Get emoji of card desgin.
+const getButtonEmoji = (design: string): string => {
     let emoji = '';
     switch (design) {
         case DESIGN_CONST.DESIGN_FACE:
@@ -194,13 +209,32 @@ const getButtonEmoji = (design: string) => {
     return emoji;
 };
 
+// Get difficult based on passed color. Blue: normal, Red: Hard, Black: easy.
+const getDifficulty = (color: string): GameModeType => {
+    let difficulty: GameModeType = GAME_MODE.NORMAL;
+    switch (color) {
+        case COLORS_CONST.COLOR_BLUE:
+            difficulty = GAME_MODE.NORMAL;
+            break;
+        case COLORS_CONST.COLOR_RED:
+            difficulty = GAME_MODE.HARD;
+            break;
+        default:
+            COLORS_CONST.COLOR_BLACK;
+            difficulty = GAME_MODE.EASY;
+    }
+
+    return difficulty;
+};
+
 export {
     initCards,
     shuffle,
     clickCardEvent,
     countDown,
     getButtonEmoji,
-    getButtonColor
+    getButtonColor,
+    getDifficulty,
 };
 
 export type { IndexNumbers };
