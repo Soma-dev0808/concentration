@@ -1,17 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import lang from '../utilities/lang';
+import { GAME_COUNT } from '../utilities/gameSetting';
 
 import type { RootState } from '../app/configureStore';
 import type { Designs } from './cardDesignSlice';
-
-const GAME_MODE = {
-    EASY: 'easy',
-    HARD: 'hard',
-} as const;
-type GameModeType = typeof GAME_MODE[keyof typeof GAME_MODE];
+import type { GameModeType } from '../utilities/gameSetting';
 
 interface GameSetting {
-    mode?: GameModeType;
+    difficulty: GameModeType;
     design: Designs;
 }
 type Cards = Array<string>;
@@ -50,8 +46,8 @@ interface CardClickEventResult {
     overlay: Overlay;
 }
 
-type ReadyStatus = -2 | -1 | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9; // -2: disable card pick. -1: 1 card pciked. 0 ~ 9: card number.
-type RollbackStatus = -1 | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9; // -1: No idx set(default). 0 ~ 9 card idx.
+type ReadyStatus = -2 | -1 | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13; // -2: disable card pick. -1: 1 card pciked. 0 ~ 13: card number.
+type RollbackStatus = -1 | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13; // -1: No idx set(default). 0 ~ 13 card idx.
 
 interface ConcentrationCore {
     cards: Cards,
@@ -66,7 +62,7 @@ interface ConcentrationCore {
     overlay: Overlay;
 }
 
-const _count = 15;
+const _count = GAME_COUNT.normal;
 const initialState: ConcentrationCore = {
     cards: [],
     status: [],
@@ -174,7 +170,7 @@ export {
     closeResult,
     resetPickedCards,
     resetMessage,
-    selectGameState
+    selectGameState,
 };
 export type {
     Designs,

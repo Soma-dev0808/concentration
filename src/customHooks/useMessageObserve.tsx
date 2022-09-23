@@ -26,7 +26,7 @@ const useMessageObserve = (
         setTimeout(() => {
             resetCards && callBack1();
             resetMessage && callBack2();
-        }, 800);
+        }, 500);
     }, [message]);
 };
 

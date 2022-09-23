@@ -4,7 +4,7 @@ import './HeaderButtons.scss';
 import type { Colors } from '../../feature/cardColorSlice';
 import type { CommonActionType } from '../../app/configureStore';
 import type { Designs } from '../../feature/cardDesignSlice';
-import { getButtonColor, getButtonEmoji } from '../../utilities/utils';
+import { getButtonColor, getButtonEmoji, getDifficulty } from '../../utilities/utils';
 
 interface HeaderButtonsProps {
     color: Colors,
@@ -23,6 +23,7 @@ const HeaderButtons: FC<HeaderButtonsProps> = ({
 }) => {
     const handleChangeColor = () => changeColor();
     const handleChangeDesign = () => changeDesign();
+    const difficulty = getDifficulty(color);
 
     return (
         <div className='header-buttons'>
@@ -35,7 +36,7 @@ const HeaderButtons: FC<HeaderButtonsProps> = ({
                 }
                 disabled={run}
             >
-                Card Color {color}
+                Difficulty: {difficulty}
             </button>
             <button
                 onClick={handleChangeDesign}

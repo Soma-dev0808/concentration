@@ -1,5 +1,16 @@
 @import './components/Common.scss';
 
+html,
+body {
+  margin: 0;
+  box-sizing: border-box;
+  height: 100%;
+
+  background: -moz-linear-gradient(top left, #222, $primaryColor 30%, #47caff 60%, #222);
+  background: -webkit-linear-gradient(top left, #222, $primaryColor 30%, #47caff 60%, #222);
+  background: linear-gradient(to bottom right, #222, $primaryColor 30%, #47caff 60%, #222);
+}
+
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
@@ -25,26 +36,18 @@
 
 #root {
   width: 100%;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  // place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-  box-sizing: border-box;
+  height: 100%;
 }
 
 .game-container {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  overflow: auto;
 }
 
 .game-table-contaner {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   height: 100vh;
 }

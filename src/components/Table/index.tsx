@@ -11,13 +11,11 @@ import { ConcentrationCore } from '../../feature/gameSlice';
 
 interface TableContainerProps extends ConcentrationCore {
     color: Colors,
-    design: Designs,
     tableActions: typeof GameActions,
 }
 
 const TableContainer = ({
     color,
-    design,
     cards,
     status,
     stsRollBackIdx,
@@ -33,7 +31,6 @@ const TableContainer = ({
     return (
         <Table
             color={color}
-            design={design}
             cards={cards}
             status={status}
             stsRollBackIdx={stsRollBackIdx}
@@ -60,7 +57,6 @@ const TableContainer = ({
 const mapStateToProps = (state: RootState) => {
     return ({
         color: state.cardColor.color,
-        design: state.cardDesign.design,
         cards: state.gameState.gameState.cards,
         status: state.gameState.gameState.status,
         stsRollBackIdx: state.gameState.gameState.stsRollBackIdx,

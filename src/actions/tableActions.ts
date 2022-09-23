@@ -8,14 +8,20 @@ import {
     resetPickedCards,
     resetMessage,
 } from '../feature/gameSlice';
-import { clickCardEvent, IndexNumbers, initCards } from '../utilities/utils';
+import {
+    clickCardEvent,
+    getDifficulty,
+    IndexNumbers,
+    initCards
+} from '../utilities/utils';
 
 import type { AppDispatch, AppGetState } from "../app/configureStore";
-import type { Designs } from "../feature/cardDesignSlice";
 
-const initializeGame = (design: Designs) => {
-    return (dispatch: AppDispatch) => {
-        dispatch(initGame(initCards({ design })));
+const initializeGame = () => {
+    return (dispatch: AppDispatch, getState: AppGetState) => {
+        const design = getState().cardDesign.design;
+        const difficulty = getDifficulty(getState().cardColor.color);
+        dispatch(initGame(initCards({ design, difficulty })));
     };
 };
 
