@@ -61,3 +61,10 @@
         width: 95%;
     }
 }
+
+@include mobile {
+    .main {
+        width: 99%;
+        padding: 15px 0px;
+    }
+}

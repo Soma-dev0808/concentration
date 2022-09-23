@@ -1,7 +1,15 @@
 @import '../Common.scss';
+@import '../mixin';
 
 .count-number {
     color: $colorWhite;
     font-size: 1.2em;
     font-weight: bold;
+}
+
+@include mobile {
+    .count-number {
+        padding-right: 10px;
+
+    }
 }
