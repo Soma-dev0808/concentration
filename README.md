@@ -5,7 +5,8 @@
 ## About this app:
  
 [Concentration](https://en.wikipedia.org/wiki/Concentration_(card_game)) which is a card game you can find a match of 2 cards. Within the time limit, you need to find all matches. Otherwise you will lose the game.
-The technology used:
+
+### The technology used:
  - <img width="20" alt="vite logo" src="https://user-images.githubusercontent.com/55787141/192159976-6af8f83f-73ed-4c5b-b577-be4eeb7eb28d.png"> [Vite](https://vitejs.dev/)(Boosted development) 
  - <img width="20" alt="react logo" src="https://user-images.githubusercontent.com/55787141/192160993-03f102a0-d47d-49ae-a402-e4a9a80523ec.png"> React.ts
     - <img width="20" alt="vercel-icon-dark" src="https://user-images.githubusercontent.com/55787141/192161704-f3bb0f19-d65a-487f-88ef-0df01a27b794.svg"> Redux toolkit
