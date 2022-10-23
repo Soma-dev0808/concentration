@@ -1,0 +1,41 @@
+@import '../Common.scss';
+@import '../mixin.scss';
+
+.score-modal {
+    &-container {
+        @include modalBase;
+    }
+
+    &-modal {
+        @include modalContentBase(60%, 32%, 20px);
+        color: $colorBlack;
+        max-width: 400px;
+    }
+
+    &-error {
+        color: $colorRed;
+        font-size: medium;
+    }
+
+    &-close-button {
+        color: $colorWhite;
+        font-weight: bold;
+        padding: 10px;
+        @include buttonBase($defaultButtonColor, $defaultButtonColorDark);
+    }
+
+    @include mobile {
+        &-modal {
+            @include modalContentBase(70%, 40%, 20px);
+            color: $colorBlack;
+        }
+
+        &-close-button {
+            padding: 7px;
+        }
+
+        &-error {
+            font-size: small;
+        }
+    }
+}

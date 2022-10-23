@@ -1,13 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit';
 import gameReducer from '../feature/gameSlice';
 import cardColorReducer from '../feature/cardColorSlice';
-import cardDesignReducer, { Designs } from '../feature/cardDesignSlice';
+import cardDesignReducer from '../feature/cardDesignSlice';
+import apiStatusReducer from '../feature/apiStatusSlice';
+import userScoresReducer from '../feature/userScoreSlice';
 
 const store = configureStore({
     reducer: {
         gameState: gameReducer,
         cardColor: cardColorReducer,
         cardDesign: cardDesignReducer,
+        apiStatus: apiStatusReducer,
+        userScores: userScoresReducer,
     }
 });
 

@@ -1,10 +1,11 @@
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
+
+import { getButtonColor, getButtonEmoji, getDifficulty } from '../../utilities/utils';
 
 import './HeaderButtons.scss';
 import type { Colors } from '../../feature/cardColorSlice';
 import type { CommonActionType } from '../../app/configureStore';
 import type { Designs } from '../../feature/cardDesignSlice';
-import { getButtonColor, getButtonEmoji, getDifficulty } from '../../utilities/utils';
 
 interface HeaderButtonsProps {
     color: Colors,
@@ -12,6 +13,7 @@ interface HeaderButtonsProps {
     run: boolean,
     changeColor: CommonActionType,
     changeDesign: CommonActionType,
+    toggleScoreListModal: CommonActionType,
 }
 
 const HeaderButtons: FC<HeaderButtonsProps> = ({
@@ -19,11 +21,13 @@ const HeaderButtons: FC<HeaderButtonsProps> = ({
     design,
     run,
     changeColor,
-    changeDesign
+    changeDesign,
+    toggleScoreListModal,
 }) => {
     const handleChangeColor = () => changeColor();
     const handleChangeDesign = () => changeDesign();
-    const difficulty = getDifficulty(color);
+    const handleShowScore = () => toggleScoreListModal();
+    const difficulty = useMemo(() => getDifficulty(color), [color]);
 
     return (
         <div className='header-buttons'>
@@ -44,6 +48,13 @@ const HeaderButtons: FC<HeaderButtonsProps> = ({
                 disabled={run}
             >
                 Card Design {getButtonEmoji(design)}
+            </button>
+            <button
+                onClick={handleShowScore}
+                className={`header-button ${run && 'header-button-disabled'}`}
+                disabled={run}
+            >
+                Show Score
             </button>
         </div>
     );

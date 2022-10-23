@@ -27,6 +27,7 @@ const HeaderButtonsContainer = ({
             run={run}
             changeColor={headerButtonsActions.changeColor}
             changeDesign={headerButtonsActions.changeDesign}
+            toggleScoreListModal={headerButtonsActions.toggleScoreListModalExec}
         />
     );
 };
@@ -46,7 +47,6 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
         headerButtonsActions: bindActionCreators(HeaderButtonsActions, dispatch),
     });
 };
-
 
 
 export default connect(

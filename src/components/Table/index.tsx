@@ -6,7 +6,6 @@ import * as GameActions from '../../actions/tableActions';
 
 import type { AppDispatch, RootState } from '../../app/configureStore';
 import type { Colors } from '../../feature/cardColorSlice';
-import type { Designs } from '../../feature/cardDesignSlice';
 import { ConcentrationCore } from '../../feature/gameSlice';
 
 interface TableContainerProps extends ConcentrationCore {
@@ -46,7 +45,6 @@ const TableContainer = ({
             finishCurrGame={tableActions.finishCurrGame}
             updateGameCount={tableActions.updateGameCount}
             cardClickEvent={tableActions.cardClickEvent}
-            closeResultDialog={tableActions.closeResultDialog}
             resetPickedCards={tableActions.handleResetPickedCards}
             resetMessage={tableActions.handleResetMessage}
         />
