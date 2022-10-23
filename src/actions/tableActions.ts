@@ -14,6 +14,7 @@ import {
     IndexNumbers,
     initCards
 } from '../utilities/utils';
+import { fetchUserScores, postUserScore, toggleScoreListModal } from '../feature/userScoreSlice';
 
 import type { AppDispatch, AppGetState } from "../app/configureStore";
 
@@ -68,6 +69,27 @@ const handleResetMessage = () => {
     };
 };
 
+const handlePostResult = (username: string, score: number) => {
+    return async (dispatch: AppDispatch, getState: AppGetState) => {
+        await dispatch(postUserScore({ username, score }));
+
+        dispatch(closeResult());
+
+        if (!getState().userScores.error) {
+            setTimeout(() => {
+                dispatch(toggleScoreListModal({ isShow: true }));
+
+            }, 500);
+        }
+    };
+};
+
+const handleGetScoreList = () => {
+    return async (dispatch: AppDispatch) => {
+        dispatch(fetchUserScores());
+    };
+};
+
 export {
     initializeGame,
     startNewGame,
@@ -76,5 +98,7 @@ export {
     cardClickEvent,
     closeResultDialog,
     handleResetPickedCards,
-    handleResetMessage
+    handleResetMessage,
+    handlePostResult,
+    handleGetScoreList
 };

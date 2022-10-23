@@ -15,3 +15,9 @@
         font-size: 2em;
     }
 }
+
+@include mobile {
+    .game-title {
+        font-size: 1.5em;
+    }
+}

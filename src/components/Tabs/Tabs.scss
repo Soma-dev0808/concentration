@@ -1,0 +1,66 @@
+@import '../Common.scss';
+@import '../mixin.scss';
+
+.score-tab {
+    &-container {
+        height: 90%;
+    }
+
+    &-tabs {
+        margin: 0;
+        padding: 0;
+        font-weight: bold;
+    }
+
+    &-content {
+        height: 80%;
+        overflow-y: scroll;
+        border: 1px solid #ccc;
+        border-radius: 0 5px 5px 5px;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    &-content-inner {
+        padding: 10px;
+    }
+
+    &-list {
+        border-bottom: 1px solid #ccc;
+        padding-left: 0;
+    }
+
+    &-list-item {
+        display: inline-block;
+        list-style: none;
+        margin-bottom: -1px;
+        padding: 0.5rem 0.75rem;
+    }
+
+    &-easy {
+        color: rgb(97, 207, 97);
+    }
+
+    &-normal {
+        color: $colorBlue;
+    }
+
+    &-hard {
+        color: $colorRed;
+    }
+
+    &-list-active {
+        border-radius: 5px 5px 0 0;
+        background-color: white;
+        border: solid #ccc;
+        border-width: 1px 1px 0 1px;
+    }
+
+    @include mobile {
+        &-tabs {
+            font-size: 13px;
+        }
+    }
+}

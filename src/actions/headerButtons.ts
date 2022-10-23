@@ -1,6 +1,7 @@
 import { AppDispatch, AppGetState } from "../app/configureStore";
 import { COLORS_CONST, setColor } from '../feature/cardColorSlice';
 import { DESIGN_CONST, setDesign } from '../feature/cardDesignSlice';
+import { toggleScoreListModal } from '../feature/userScoreSlice';
 
 const changeColor = () => {
     return (dispatch: AppDispatch, getState: AppGetState) => {
@@ -47,4 +48,10 @@ const changeDesign = () => {
     };
 };
 
-export { changeColor, changeDesign };
+const toggleScoreListModalExec = () => {
+    return (dispatch: AppDispatch, getState: AppGetState) => {
+        dispatch(toggleScoreListModal({ isShow: !getState().userScores.isShowScoreListModal }));
+    };
+};
+
+export { changeColor, changeDesign, toggleScoreListModalExec };

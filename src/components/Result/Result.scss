@@ -7,8 +7,37 @@
     }
 
     &-modal {
-        @include modalContentBase(60%, 20%, 20px); // Height 20% for now until firebase is integrated.
+        @include modalContentBase(60%, 25%, 20px);
         max-width: 600px;
+    }
+
+    &-content {
+        display: flex;
+        flex-direction: column;
+
+        &-hide {
+            display: flex;
+            flex-direction: column;
+            animation-name: fadeOut;
+            animation-duration: 0.5s;
+            animation-timing-function: ease;
+            animation-direction: normal;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+                transform: translateX(0px);
+            }
+
+            to {
+                opacity: 0;
+                transform: translateX(20px);
+                height: 0;
+                overflow: hidden;
+            }
+        }
     }
 
     &-close {
@@ -62,6 +91,69 @@
         height: 40px;
         @include buttonBase($defaultButtonColor, $defaultButtonColorDark);
     }
+
+
+    &-post {
+        height: 0;
+        overflow: hidden;
+        opacity: 0;
+
+        &-show {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+            opacity: 0;
+            height: 100%;
+            animation-name: fadeIn;
+            animation-duration: 1s;
+            animation-delay: 0.2s;
+            animation-timing-function: ease;
+            animation-direction: normal;
+            animation-fill-mode: forwards;
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateX(-20px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateX(0px);
+                    // height: auto;
+                    overflow: auto;
+                }
+            }
+
+            .error-message {
+                color: $colorRed;
+                font-size: 0.8rem;
+                ;
+            }
+
+            .mt-16 {
+                margin-top: 16px;
+            }
+        }
+
+        &-username {
+            display: block;
+            margin: 16px auto 0;
+            border-radius: 5px;
+            border: 2px solid $secondaryColor;
+            padding: 8px;
+            outline: none
+        }
+
+        &-error {
+            border: 2px solid $colorRed;
+
+            &:focus {
+                border: 2px solid $colorRed;
+            }
+        }
+    }
 }
 
 @include tablet {
@@ -83,7 +175,7 @@
     .result {
 
         &-modal {
-            @include modalContentBase(80%, 40%, 20px);
+            @include modalContentBase(80%, 22%, 20px);
             max-width: 600px;
         }
 

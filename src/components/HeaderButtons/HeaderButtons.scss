@@ -52,4 +52,9 @@
             background-color: $defaultButtonColorDark;
         }
     }
+
+    @include mobile {
+        font-size: 10px;
+        padding: 0;
+    }
 }

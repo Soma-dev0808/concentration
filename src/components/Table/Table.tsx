@@ -13,6 +13,7 @@ import { getDifficulty, IndexNumbers } from '../../utilities/utils';
 import type { ConcentrationCore } from '../../feature/gameSlice';
 import type { Colors } from '../../feature/cardColorSlice';
 import type { GenericCommonActionType, CommonActionType } from '../../app/configureStore';
+import ScoreListModal from '../ScoreListModal';
 
 interface TableProps extends ConcentrationCore {
     color: Colors,
@@ -21,7 +22,6 @@ interface TableProps extends ConcentrationCore {
     finishCurrGame: CommonActionType,
     updateGameCount: GenericCommonActionType,
     cardClickEvent: GenericCommonActionType,
-    closeResultDialog: CommonActionType,
     resetPickedCards: CommonActionType;
     resetMessage: CommonActionType;
 }
@@ -42,9 +42,8 @@ const Table: FC<TableProps> = ({
     finishCurrGame,
     updateGameCount,
     cardClickEvent,
-    closeResultDialog,
     resetPickedCards,
-    resetMessage
+    resetMessage,
 }) => {
     // Get game count based on game difficulty.
     const difficulty = getDifficulty(color);
@@ -127,15 +126,9 @@ const Table: FC<TableProps> = ({
                 </div>
             </div>
 
-            {
-                result !== '' && (
-                    <Result
-                        result={result}
-                        score={gameCount - count}
-                        closeButtonAction={closeResultDialog}
-                    />
-                )
-            }
+            {result !== '' && <Result score={gameCount - count} />}
+
+            <ScoreListModal />
         </>
     );
 };
