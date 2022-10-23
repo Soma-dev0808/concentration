@@ -10,6 +10,7 @@
  - <img width="20" alt="vite logo" src="https://user-images.githubusercontent.com/55787141/192159976-6af8f83f-73ed-4c5b-b577-be4eeb7eb28d.png"> [Vite](https://vitejs.dev/)(Boosted development) 
  - <img width="20" alt="react logo" src="https://user-images.githubusercontent.com/55787141/192160993-03f102a0-d47d-49ae-a402-e4a9a80523ec.png"> React.ts v18.2.0
     - <img width="20" alt="vercel-icon-dark" src="https://user-images.githubusercontent.com/55787141/192161704-f3bb0f19-d65a-487f-88ef-0df01a27b794.svg"> Redux toolkit
+ -  <img width="20" alt="vercel-icon-dark" src="https://user-images.githubusercontent.com/55787141/192341801-2eaae9ab-da73-4b0e-b474-5388cd739048.png"> Firebase(firestore)
  -  <img width="20" alt="vercel-icon-dark" src="https://user-images.githubusercontent.com/55787141/192161251-856be567-c1ff-4568-808d-1f7ef29d97a8.png"> Vercel(deployment)
 
 ### Project Screen Shot(s)
