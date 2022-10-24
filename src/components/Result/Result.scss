@@ -175,7 +175,7 @@
     .result {
 
         &-modal {
-            @include modalContentBase(80%, 22%, 20px);
+            @include modalContentBase(80%, 30%, 20px);
             max-width: 600px;
         }
 
