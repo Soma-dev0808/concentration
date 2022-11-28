@@ -4,7 +4,7 @@
 
 ## About this app:
  
-[Concentration](https://en.wikipedia.org/wiki/Concentration_(card_game)) which is a card game you can find a match of 2 cards. Within the time limit, you need to find all matches. Otherwise you will lose the game.
+[Concentration](https://en.wikipedia.org/wiki/Concentration_(card_game)) which is a card game you can find a match of 2 cards. Within the time limit, you need to find all matches. Otherwise you will lose the game. You can choose difficulty and card design when you play the game. If you won the game, you can upload your score online and see a ranking.
 
 ### The technology used:
  - <img width="20" alt="vite logo" src="https://user-images.githubusercontent.com/55787141/192159976-6af8f83f-73ed-4c5b-b577-be4eeb7eb28d.png"> [Vite](https://vitejs.dev/)(Boosted development) 
